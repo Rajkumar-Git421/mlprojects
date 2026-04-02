@@ -1,0 +1,5 @@
+2026-04-02 18:47:05,051 - INFO - NumExpr defaulting to 12 threads.
+2026-04-02 18:47:07,988 - INFO - Entered the data ingestion method or component
+2026-04-02 18:47:08,006 - INFO - Read the dataset as dataframe
+2026-04-02 18:47:08,013 - INFO - Train test split initiated
+2026-04-02 18:47:08,031 - INFO - Ingestion of the data is completed
