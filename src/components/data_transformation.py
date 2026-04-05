@@ -12,7 +12,7 @@ from src.exception import CustomException
 from src.logger import logging
 
 from src.utils import save_object
-from src.components.data_transformation import DataTransformationConfig
+#from src.components.data_transformation import DataTransformationConfig
 
 @dataclass
 class DataTransformationConfig:
@@ -25,14 +25,14 @@ class DataTransformation:
     def get_data_transformer_object(self):
         try:
             numerical_columns = ['writing_score', 'reading_score']
-            categorical_columns = ['gender', 'race_ethnicity', 'parental_level_of',
+            categorical_columns = ['gender', 'race_ethnicity', 'parental_level_of_education',
                                    'lunch', 'test_preparation_course']
 
             num_pipeline = Pipeline(steps=[("imputer", SimpleImputer(strategy='median')),
                                            ("scaler", StandardScaler())])
             cat_pipeline = Pipeline(steps=[("imputer", SimpleImputer(strategy='most_frequent')),
                                            ("one_hot_encoder", OneHotEncoder()),
-                                           ("scaler", StandardScaler())])
+                                           ("scaler", StandardScaler(with_mean=False))])
             
             logging.info("Numerical columns standard scalling completed")
             logging.info("Categorical columns encoding complted")
@@ -70,8 +70,8 @@ class DataTransformation:
             input_feature_train_arr = preprocessing_obj.fit_transform(input_feature_train_df)
             input_feature_test_arr = preprocessing_obj.transform(input_feature_test_df)
 
-            train_arr = np.c[input_feature_train_arr, np.array(target_feature_train_df)]
-            test_arr = np.c[input_feature_test_arr, np.array(target_feature_test_df)]
+            train_arr = np.c_[input_feature_train_arr, np.array(target_feature_train_df)]
+            test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
 
             logging.info(f"saved preprocessing object")
 
